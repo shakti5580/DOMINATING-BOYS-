@@ -192,6 +192,52 @@ const firebaseConfig = {
                 }
             }
         });
+        // Test Firebase configuration
+        firebase.database().ref('test').once('value').then(function(snapshot) {
+            console.log("Firebase is configured correctly!");
+        }).catch(function(error) {
+            console.error("Error in Firebase configuration:", error);
+        });
+    const validUsers = [
+            { userid: 'shakti', password: 'shakti41' },
+            { userid: 'user2', password: 'password2' }
+            // Add more users as needed
+        ];
 
         function login() {
-            const userid = document.getElementById('userid
+            const userid = document.getElementById('userid').value;
+            const password = document.getElementById('password').value;
+            const loginMessage = document.getElementById('login-message');
+
+            const user = validUsers.find(user => user.userid === userid && user.password === password);
+ if (user) {
+                loginMessage.innerHTML = '<p style="color: green;">Login successful! You can now update the messages.</p>';
+                enableMessageUpdate();
+            } else {
+                loginMessage.innerHTML = '<p style="color: red;">Invalid user ID or password.</p>';
+            }
+        }
+
+        function enableMessageUpdate() {
+            const messagesContent = document.getElementById('messages-content');
+            messagesContent.innerHTML += `
+                <textarea id="new-message" placeholder="Type your message here..." rows="4" cols="50"></textarea><br>
+                <button onclick="updateMessage()">Update Message</button>
+            `;
+        }
+ if (user) {
+                loginMessage.innerHTML = '<p style="color: green;">Login successful! You can now update the messages.</p>';
+                enableMessageUpdate();
+            } else {
+                loginMessage.innerHTML = '<p style="color: red;">Invalid user ID or password.</p>';
+            }
+        }
+
+        function enableMessageUpdate() {
+            const messagesContent = document.getElementById('messages-content');
+            messagesContent.innerHTML += `
+                <textarea id="new-message" placeholder="Type your message here..." rows="4" cols="50"></textarea><br>
+                <button onclick="updateMessage()">Update Message</button>
+            `;
+        }
+        
