@@ -224,6 +224,29 @@ v            ('password').value;
                 alert(`Failed to send message: ${error.message}`);
             });
         }
+        <div class="section login-form">
+    <h2>Login to Update Messages</h2>
+    <input type="text" id="userid" placeholder="User ID"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <div id="login-message"></div>
+</div>
+
+<div class="section messages">
+    <h2>Important Messages</h2>
+    <div id="messages-content">
+        <!-- Messages will be displayed here -->
+    </div>
+</div>
+
+<div class="section send-message">
+    <h2>Send a Message</h2>
+    <form id="message-form" onsubmit="sendMessage(event)">
+        <textarea id="message-text" placeholder="Type your message here..." required></textarea><br>
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+
     </script>
 </body>
 </html>
