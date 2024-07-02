@@ -39,30 +39,15 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            justify-content: center;
-        }
-        .images div {
-            position: relative;
-            flex: 1 1 calc(50% - 10px); /* Two images per row with gap */
         }
         .images img {
             max-width: 100%;
             height: auto;
         }
-        .images button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #f00;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .google-form, .messages, .login-form, .image-upload-form {
+        .google-form {
             text-align: center;
         }
-        .google-form a, .team-members a {
+        .google-form a {
             color: #fff;
             text-decoration: underline;
         }
@@ -73,43 +58,53 @@
         .team-members li {
             margin-bottom: 10px;
         }
+        .team-members a {
+            color: #fff;
+            text-decoration: underline;
+        }
         footer {
             text-align: center;
             padding: 20px 0;
         }
-        .messages, .login-form, .image-upload-form {
+        .messages {
             background-color: #333;
             padding: 20px;
             border-radius: 5px;
         }
-        .messages h2, .login-form h2, .image-upload-form h2 {
+        .messages h2 {
             margin-top: 0;
         }
-        .login-form input, .image-upload-form input {
+        .login-form {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .login-form input {
             margin: 5px 0;
             padding: 10px;
             width: 80%;
-            max-width: 300px;
         }
-        .login-form button, .image-upload-form button {
+        .login-form button {
             padding: 10px 20px;
             background-color: #555;
             color: #fff;
             border: none;
             cursor: pointer;
         }
-        .login-form button:hover, .image-upload-form button:hover {
+        .login-form button:hover {
             background-color: #777;
         }
-
-        /* Media queries for responsiveness */
-        @media (max-width: 768px) {
-            .images div {
-                flex: 1 1 calc(100% - 10px); /* One image per row */
-            }
-            .login-form input, .image-upload-form input {
-                width: 100%;
-            }
+        .images button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .images button:hover {
+            background-color: #777;
         }
     </style>
 </head>
@@ -134,7 +129,9 @@
 We aim to dominate the kabaddi field with our exceptional teamwork, strategic prowess, and unparalleled skill. Our journey is fueled by the blessings of Ram Ji and Hanuman Ji, guiding us to strive for greatness and honor in every match we play.
 
 जय हनुमान ज्ञान गुण सागर।
-जय कपीस तिहुँ लोक उजागर।।</p>
+जय कपीस तिहुँ लोक उजागर।।  
+
+</p>
         </div>
         <div class="section team-members">
             <h2>Team Members</h2>
@@ -157,26 +154,20 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
         </div>
         <div class="section images">
             <h2>Images</h2>
-            <div id="images-container">
-                <!-- Images will be loaded here -->
-            </div>
+            <div id="images-container"></div>
+            <input type="file" id="imageUpload" accept="image/*">
+            <button onclick="uploadImage()">Upload Image</button>
         </div>
         <div class="section google-form">
             <h2>Fill this form to participate</h2>
             <p><a href="unavailable.html" target="_blank">Click here to fill out the form</a></p>
         </div>
         <div class="section login-form">
-            <h2>Login to Update Messages and Upload Images</h2>
+            <h2>Login to Update Messages</h2>
             <input type="text" id="userid" placeholder="User ID"><br>
             <input type="password" id="password" placeholder="Password"><br>
             <button onclick="login()">Login</button>
             <div id="login-message"></div>
-        </div>
-        <div class="section image-upload-form" style="display: none;">
-            <h2>Upload Image</h2>
-            <input type="file" id="image-upload" accept="image/*"><br>
-            <button onclick="uploadImage()">Upload</button>
-            <div id="upload-message"></div>
         </div>
         <footer>
             <p>© 2024 DOMINATING BOYS. All rights reserved.</p>
@@ -203,6 +194,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
+        // Listen for form submit
         function login() {
             const userid = document.getElementById('userid').value;
             const password = document.getElementById('password').value;
@@ -210,10 +202,9 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
 
             firebase.auth().signInWithEmailAndPassword(userid, password)
                 .then((userCredential) => {
-                    loginMessage.innerHTML = '<p style="color: green;">Login successful! You can now update the messages and upload images.</p>';
+                    // Signed in
+                    loginMessage.innerHTML = '<p style="color: green;">Login successful! You can now update the messages.</p>';
                     enableMessageUpdate();
-                    document.querySelector('.image-upload-form').style.display = 'block';
-                    loadImages();
                 })
                 .catch((error) => {
                     loginMessage.innerHTML = '<p style="color: red;">Invalid user ID or password.</p>';
@@ -230,70 +221,69 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
 
         function updateMessage() {
             const newMessage = document.getElementById('new-message').value;
+            const messagesContent = document.getElementById('messages-content');
+
             if (newMessage.trim()) {
                 firebase.database().ref('messages').set({
                     message: newMessage
-                }).then(() => {
-                    document.getElementById('messages-content').innerHTML = `<p>${newMessage}</p>`;
-                }).catch((error) => {
-                    console.error("Error updating message: ", error);
                 });
             }
         }
 
         function uploadImage() {
-            const file = document.getElementById('image-upload').files[0];
-            if (file) {
-                const storageRef = firebase.storage().ref('images/' + file.name);
-                storageRef.put(file).then((snapshot) => {
-                    storageRef.getDownloadURL().then((url) => {
-                        firebase.database().ref('images').push({
-                            name: file.name,
-                            url: url
-                        }).then(() => {
-                            loadImages();
-                            document.getElementById('upload-message').innerHTML = '<p style="color: green;">Image uploaded successfully.</p>';
-                        }).catch((error) => {
-                            console.error("Error uploading image: ", error);
+            const imageUpload = document.getElementById('imageUpload').files[0];
+            if (imageUpload) {
+                const storageRef = firebase.storage().ref('images/' + imageUpload.name);
+                const uploadTask = storageRef.put(imageUpload);
+
+                uploadTask.on('state_changed', function(snapshot) {
+                    // Progress monitoring can be added here
+                }, function(error) {
+                    console.error('Error uploading image:', error);
+                }, function() {
+                    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                        // Save the image URL to the database
+                        const imagesRef = firebase.database().ref('images').push();
+                        imagesRef.set({
+                            url: downloadURL,
+                            name: imageUpload.name
                         });
                     });
                 });
             }
         }
 
-        function loadImages() {
+        function displayImages() {
             const imagesContainer = document.getElementById('images-container');
-            imagesContainer.innerHTML = '';
-            firebase.database().ref('images').on('value', (snapshot) => {
-                snapshot.forEach((childSnapshot) => {
-                    const image = childSnapshot.val();
-                    const imageDiv = document.createElement('div');
-                    const imgElement = document.createElement('img');
-                    imgElement.src = image.url;
-                    imgElement.alt = image.name;
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'Delete';
-                    deleteButton.onclick = () => deleteImage(childSnapshot.key, image.name);
-                    imageDiv.appendChild(imgElement);
-                    imageDiv.appendChild(deleteButton);
-                    imagesContainer.appendChild(imageDiv);
+            firebase.database().ref('images').on('value', function(snapshot) {
+                imagesContainer.innerHTML = '';
+                snapshot.forEach(function(childSnapshot) {
+                    const imageUrl = childSnapshot.val().url;
+                    const imageName = childSnapshot.val().name;
+                    const imageKey = childSnapshot.key;
+                    imagesContainer.innerHTML += `
+                        <div>
+                            <img src="${imageUrl}" alt="${imageName}">
+                            <button onclick="deleteImage('${imageKey}', '${imageName}')">Delete</button>
+                        </div>
+                    `;
                 });
             });
         }
 
         function deleteImage(imageKey, imageName) {
+            // Delete image from Firebase Storage
             const storageRef = firebase.storage().ref('images/' + imageName);
             storageRef.delete().then(() => {
-                firebase.database().ref('images/' + imageKey).remove().then(() => {
-                    loadImages();
-                    alert('Image deleted successfully.');
-                }).catch((error) => {
-                    console.error("Error deleting image reference from database: ", error);
-                });
+                // Remove the image reference from the database
+                firebase.database().ref('images/' + imageKey).remove();
             }).catch((error) => {
-                console.error("Error deleting image from storage: ", error);
+                console.error('Error deleting image:', error);
             });
         }
+
+        // Initialize display
+        displayImages();
     </script>
 </body>
 </html>
