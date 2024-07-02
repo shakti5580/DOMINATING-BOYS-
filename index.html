@@ -158,45 +158,40 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             <p>© 2024 DOMINATING BOYS. All rights reserved.</p>
         </footer>
     </div>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
     <script>
-        const validUsers = [
-            { userid: 'user1', password: 'password1' },
-            { userid: 'user2', password: 'password2' }
-            // Add more users as needed
-        ];
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyC-F8SsB8xRjQC0DzSyMoBwP0e6mEO5pp8",
+  authDomain: "dominating-boys.firebaseapp.com",
+  databaseURL: "https://dominating-boys-default-rtdb.firebaseio.com",
+  projectId: "dominating-boys",
+  storageBucket: "dominating-boys.appspot.com",
+  messagingSenderId: "479810830315",
+  appId: "1:479810830315:web:4e792cffe5beeacc0c63ae",
+  measurementId: "G-DPWJ36X01F"
+};
+   // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to messages in database
+        var messagesRef = firebase.database().ref('messages');
+
+        // Listen for updates to messages
+        messagesRef.on('value', function(snapshot) {
+            var messagesContent = document.getElementById('messages-content');
+            var messages = snapshot.val();
+            messagesContent.innerHTML = '';
+            for (var key in messages) {
+                if (messages.hasOwnProperty(key)) {
+                    var message = messages[key];
+                    messagesContent.innerHTML += '<p>' + message + '</p>';
+                }
+            }
+        });
 
         function login() {
-            const userid = document.getElementById('userid').value;
-            const password = document.getElementById('password').value;
-            const loginMessage = document.getElementById('login-message');
-
-            const user = validUsers.find(user => user.userid === userid && user.password === password);
-
-            if (user) {
-                loginMessage.innerHTML = '<p style="color: green;">Login successful! You can now update the messages.</p>';
-                enableMessageUpdate();
-            } else {
-                loginMessage.innerHTML = '<p style="color: red;">Invalid user ID or password.</p>';
-            }
-        }
-
-        function enableMessageUpdate() {
-            const messagesContent = document.getElementById('messages-content');
-            messagesContent.innerHTML = `
-                <p>Stay tuned for the latest updates and news.</p>
-                <textarea id="new-message" placeholder="Type your message here..." rows="4" cols="50"></textarea><br>
-                <button onclick="updateMessage()">Update Message</button>
-            `;
-        }
-
-        function updateMessage() {
-            const newMessage = document.getElementById('new-message').value;
-            const messagesContent = document.getElementById('messages-content');
-
-            if (newMessage.trim()) {
-                messagesContent.innerHTML += `<p>${newMessage}</p>`;
-            }
-        }
-    </script>
-</body>
-</html>
+            const userid = document.getElementById('userid
