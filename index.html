@@ -180,8 +180,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
 
         function login() {
             const userid = document.getElementById('userid').value;
-            const password = document.getElementById
-v            ('password').value;
+            const password = document.getElementById('password').value;
 
             firebase.auth().signInWithEmailAndPassword(userid, password)
                 .then((userCredential) => {
