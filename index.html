@@ -6,109 +6,101 @@
     <title>DOMINATING BOYS KABADDI (SACHIN SURAT)</title>
     <meta name="google-site-verification" content="M4dOYgy6_dDMQ2u9TOsZWrYN5Gs6B_Mm2jHfZ8VDUmY" />
     <style>
-        body {
-            background-color: #1a1a1a; /* Matte black */
-            color: #ffffff; /* White text */
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            padding: 20px;
-        }
-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header img {
-            max-width: 100px;
-        }
-
-        header h1 {
-            font-size: 2.5em;
-            margin: 10px 0;
-        }
         
-        header p {
-            font-size: 1.2em;
-        }
+/* Base styles */
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+header {
+    text-align: center;
+    padding: 20px 0;
+}
+header img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+h1, h2 {
+    margin: 0;
+}
+.section {
+    margin-bottom: 40px;
+}
+.images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.images img {
+    max-width: 100%;
+    height: auto;
+    flex: 1 1 calc(50% - 10px); /* Two images per row with gap */
+}
+.google-form, .messages, .login-form {
+    text-align: center;
+}
+.google-form a, .team-members a {
+    color: #fff;
+    text-decoration: underline;
+}
+.team-members ul {
+    list-style: none;
+    padding: 0;
+}
+.team-members li {
+    margin-bottom: 10px;
+}
+footer {
+    text-align: center;
+    padding: 20px 0;
+}
+.messages, .login-form {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 5px;
+}
+.messages h2, .login-form h2 {
+    margin-top: 0;
+}
+.login-form input {
+    margin: 5px 0;
+    padding: 10px;
+    width: 80%;
+    max-width: 300px;
+}
+.login-form button {
+    padding: 10px 20px;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.login-form button:hover {
+    background-color: #777;
+}
 
-        .section {
-            margin-bottom: 30px;
-        }
-
-        .section h2 {
-            font-size: 2em;
-            border-bottom: 2px solid #ffffff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .section p, .section ul {
-            font-size: 1.2em;
-        }
-
-        .section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .section ul li {
-            margin-bottom: 10px;
-        }
-
-        .section ul li a {
-            color: #ffffff;
-            text-decoration: none;
-        }
-        .section ul li a:hover {
-            text-decoration: underline;
-        }
-
-        .section images img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .section google-form a {
-            color: #ff9800; /* Accent color */
-            text-decoration: none;
-            font-weight: bold;
-        }
- .section google-form a:hover {
-            text-decoration: underline;
-        }
-
-        .login-form input {
-            margin-bottom: 10px;
-            padding: 10px;
-            width: 100%;
-            max-width: 300px;
-            border: 1px solid #ffffff;
-            background-color: #333333;
-            color: #ffffff;
-            border-radius: 5px;
-        }
-        .login-form button {
-            padding: 10px 20px;
-            background-color: #ff9800; /* Accent color */
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .login-form button:hover {
-            background-color: #e68900;
-        }
-  footer {
-            text-align: center;
-            margin-top: 20px;
-            padding: 10px 0;
-            border-top: 1px solid #ffffff;
-        }
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .images img {
+        flex: 1 1 calc(100% - 10px); /* One image per row */
+    }
+    .login-form input {
+        width: 100%;
+    }
+}
+           
     </style>
 </head>
 <body>
