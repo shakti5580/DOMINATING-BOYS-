@@ -189,6 +189,13 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             <button onclick="login()">Login</button>
             <div id="login-message"></div>
         </div>
+        <div class="section selected-players">
+    <h2>Selected Players for Next Match</h2>
+    <ul id="selected-players-list">
+        <!-- Selected players will be dynamically added here -->
+    </ul>
+</div>
+
         <footer>
             <p>© 2024 DOMINATING BOYS. All rights reserved.</p>
         </footer>
@@ -210,6 +217,29 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             appId: "1:479810830315:web:4e792cffe5beeacc0c63ae",
             measurementId: "G-DPWJ36X01F"
         };
+         // Reference to the selected players in Firebase
+    const selectedPlayersRef = firebase.database().ref('selected_players');
+
+    // Function to load selected players
+    function loadSelectedPlayers() {
+        selectedPlayersRef.once('value', function(snapshot) {
+            const selectedPlayers = snapshot.val();
+            if (selectedPlayers) {
+                const selectedPlayersListElement = document.getElementById('selected-players-list');
+                selectedPlayersListElement.innerHTML = ''; // Clear previous content
+
+                Object.values(selectedPlayers).forEach(player => {
+                    const playerElement = document.createElement('li');
+                    playerElement.textContent = player.name;
+                    selectedPlayersListElement.appendChild(playerElement);
+                });
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadSelectedPlayers();
+    });
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
