@@ -62,6 +62,7 @@
             padding: 20px;
             background-color: #333;
             border-radius: 8px;
+            display: none; /* Initially hide the login form */
         }
         .login-form label, .login-form input {
             display: block;
@@ -182,6 +183,17 @@
                     option.textContent = player;
                     selectElement.appendChild(option);
                 });
+            });
+
+            // Check if user is already signed in
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    // User is signed in, hide the login form
+                    document.getElementById('login-form').style.display = 'none';
+                } else {
+                    // No user is signed in, show the login form
+                    document.getElementById('login-form').style.display = 'block';
+                }
             });
         });
 
