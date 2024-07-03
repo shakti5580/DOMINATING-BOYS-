@@ -194,11 +194,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             <h1>Welcome to DOMINATING BOYS</h1>
         </header>
         
-        <section>
-            <h2>Meet Our Players</h2>
-            <div class="players-list" id="players-list">
-                <!-- Players will be dynamically added here -->
-            </div>
+       
 
         <footer>
             <p>© 2024 DOMINATING BOYS. All rights reserved.</p>
@@ -224,32 +220,8 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
         
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        const playersRef = firebase.database().ref('players');
-
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPlayers();
-        });
-
-        function loadPlayers() {
-            playersRef.once('value', function(snapshot) {
-                const players = snapshot.val();
-                if (players) {
-                    const playersListElement = document.getElementById('players-list');
-                    playersListElement.innerHTML = ''; // Clear previous content
-
-                    Object.values(players).forEach(player => {
-                        const playerElement = document.createElement('div');
-                        playerElement.classList.add('player');
-                        playerElement.innerHTML = `
-                            <img src="${player.photo}" alt="${player.name}">
-                            <p>${player.name}</p>
-                        `;
-                        playersListElement.appendChild(playerElement);
-                    });
-                }
-            });
-        }
-
+     
+                 
         function login() {
             const userid = document.getElementById('userid').value;
             const password = document.getElementById('password').value;
