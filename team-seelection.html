@@ -75,32 +75,25 @@
         <div class="section team-selection">
             <h2>Select the Players for the Next Match</h2>
             <select id="player1">
-                <option value=" SHAKTI">SELECT SHAKTI</option>
-                <!-- Add player options here -->
+                <option value="">Select Player 1</option>
             </select>
             <select id="player2">
-                <option value="VIVEK">Select Player 2</option>
-                <!-- Add player options here -->
+                <option value="">Select Player 2</option>
             </select>
             <select id="player3">
-                <option value="ANMOL">Select Player 3</option>
-                <!-- Add player options here -->
+                <option value="">Select Player 3</option>
             </select>
             <select id="player4">
-                <option value="VIVEK">Select Player 4</option>
-                <!-- Add player options here -->
+                <option value="">Select Player 4</option>
             </select>
             <select id="player5">
-                <option value="NIKHIL">Select Player 5</option>
-                <!-- Add player options here -->
+                <option value="">Select Player 5</option>
             </select>
             <select id="player6">
-                <option value="PIYUSH">Select Player 6</option>
-                <!-- Add player options here -->
+                <option value="">Select Player 6</option>
             </select>
             <select id="player7">
-                <option value="SAHIL">Select Player 7</option>
-                <!-- Add player options here -->
+                <option value="">Select Player 7</option>
             </select>
             <button onclick="savePlaying7()">Save Team</button>
             <div id="selection-message"></div>
@@ -129,6 +122,34 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+
+        const players = [
+            "SHAKTI",
+            "ANMOL",
+            "VIVEK",
+            "SAHIL",
+            "PIYUSH",
+            "RAVI",
+            "AMAN",
+            "NIKHIL",
+            "JANNU",
+            "RAJDEEP",
+            "CHANDU",
+            "RAJ TAKEL"
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const playerSelectElements = document.querySelectorAll('select');
+
+            playerSelectElements.forEach(selectElement => {
+                players.forEach(player => {
+                    const option = document.createElement('option');
+                    option.value = player;
+                    option.textContent = player;
+                    selectElement.appendChild(option);
+                });
+            });
+        });
 
         function savePlaying7() {
             const player1 = document.getElementById('player1').value;
