@@ -193,7 +193,16 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
         <header>
             <h1>Welcome to DOMINATING BOYS</h1>
         </header>
-        
+        <body>
+
+        <!-- Add the new section for displaying selected players -->
+        <div class="section selected-players">
+            <h2>Selected Players for the Next Match</h2>
+            <div id="selected-players-list">
+                <p>Loading selected players...</p>
+            </div>
+        </div>
+
        
 
         <footer>
@@ -258,6 +267,34 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             }
         }
 
+        // Function to load selected players
+        function loadSelectedPlayers() {
+            firebase.database().ref('playing7').once('value').then((snapshot) => {
+                const selectedPlayers = snapshot.val();
+                const selectedPlayersList = document.getElementById('selected-players-list');
+                if (selectedPlayers) {
+                    selectedPlayersList.innerHTML = `
+                        <p>Player 1: ${selectedPlayers.player1}</p>
+                        <p>Player 2: ${selectedPlayers.player2}</p>
+                        <p>Player 3: ${selectedPlayers.player3}</p>
+                        <p>Player 4: ${selectedPlayers.player4}</p>
+                        <p>Player 5: ${selectedPlayers.player5}</p>
+                        <p>Player 6: ${selectedPlayers.player6}</p>
+                        <p>Player 7: ${selectedPlayers.player7}</p>
+                    `;
+                } else {
+                    selectedPlayersList.innerHTML = '<p>No players selected yet.</p>';
+                }
+            }).catch((error) => {
+                console.error('Error loading selected players:', error);
+                document.getElementById('selected-players-list').innerHTML = '<p>Error loading selected players.</p>';
+            });
+        }
+
+        // Load selected players when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSelectedPlayers();
+        });
         // Listen for changes in the messages
         firebase.database().ref('messages').on('value', (snapshot) => {
             const data = snapshot.val();
