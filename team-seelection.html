@@ -18,15 +18,25 @@
             margin: 0 auto;
             padding: 20px;
         }
-        header {
-            text-align: center;
-            padding: 20px 0;
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            margin-bottom: 20px;
         }
-        header img {
-            max-width: 100px;
-            height: auto;
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 20px;
             display: block;
-            margin: 0 auto 10px;
+        }
+        nav ul li a:hover {
+            background-color: #575757;
         }
         h1, h2 {
             margin: 0;
@@ -34,41 +44,68 @@
         .section {
             margin-bottom: 40px;
         }
-        .team-selection {
-            text-align: center;
-        }
-        .team-selection ul {
-            list-style: none;
-            padding: 0;
-        }
-        .team-selection li {
-            margin-bottom: 10px;
-        }
-        .team-selection input {
-            margin-right: 10px;
-        }
         footer {
             text-align: center;
             padding: 20px 0;
+        }
+        .team-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .team-selection select, .team-selection button {
+            margin: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Navigation bar -->
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team-selection.html">Select Playing 7</a></li>
+            </ul>
+        </nav>
+        
         <header>
-            <img src="photo_2024-06-30_15-30-21 (1).png" alt="DOMINATING BOYS Logo">
-            <h1>DOMINATING BOYS</h1>
-            <p>Select Playing 7 for Next Match</p>
+            <h1>Select Playing 7</h1>
         </header>
+        
         <div class="section team-selection">
-            <h2>Choose Your Team</h2>
-            <form id="team-selection-form">
-                <ul id="team-members-list">
-                    <!-- Team members will be loaded here -->
-                </ul>
-                <button type="submit">Save Team</button>
-            </form>
+            <h2>Select the Players for the Next Match</h2>
+            <select id="player1">
+                <option value=" SHAKTI">Select Player 1</option>
+                <!-- Add player options here -->
+            </select>
+            <select id="player2">
+                <option value="VIVEK">Select Player 2</option>
+                <!-- Add player options here -->
+            </select>
+            <select id="player3">
+                <option value="ANMOL">Select Player 3</option>
+                <!-- Add player options here -->
+            </select>
+            <select id="player4">
+                <option value="VIVEK">Select Player 4</option>
+                <!-- Add player options here -->
+            </select>
+            <select id="player5">
+                <option value="NIKHIL">Select Player 5</option>
+                <!-- Add player options here -->
+            </select>
+            <select id="player6">
+                <option value="PIYUSH">Select Player 6</option>
+                <!-- Add player options here -->
+            </select>
+            <select id="player7">
+                <option value="SAHIL">Select Player 7</option>
+                <!-- Add player options here -->
+            </select>
+            <button onclick="savePlaying7()">Save Team</button>
+            <div id="selection-message"></div>
         </div>
+        
         <footer>
             <p>© 2024 DOMINATING BOYS. All rights reserved.</p>
         </footer>
@@ -93,48 +130,33 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-        // Load team members
-        function loadTeamMembers() {
-            const teamMembersList = document.getElementById('team-members-list');
-            firebase.database().ref('team-members').on('value', (snapshot) => {
-                teamMembersList.innerHTML = '';
-                snapshot.forEach((childSnapshot) => {
-                    const member = childSnapshot.val();
-                    teamMembersList.innerHTML += `
-                        <li>
-                            <input type="checkbox" name="team-member" value="${childSnapshot.key}">
-                            ${member.name}
-                        </li>
-                    `;
+        function savePlaying7() {
+            const player1 = document.getElementById('player1').value;
+            const player2 = document.getElementById('player2').value;
+            const player3 = document.getElementById('player3').value;
+            const player4 = document.getElementById('player4').value;
+            const player5 = document.getElementById('player5').value;
+            const player6 = document.getElementById('player6').value;
+            const player7 = document.getElementById('player7').value;
+
+            if (player1 && player2 && player3 && player4 && player5 && player6 && player7) {
+                firebase.database().ref('playing7').set({
+                    player1,
+                    player2,
+                    player3,
+                    player4,
+                    player5,
+                    player6,
+                    player7
+                }).then(() => {
+                    document.getElementById('selection-message').innerText = 'Playing 7 saved successfully!';
+                }).catch((error) => {
+                    document.getElementById('selection-message').innerText = 'Error saving Playing 7: ' + error.message;
                 });
-            });
-        }
-
-        // Save selected team
-        document.getElementById('team-selection-form').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const selectedMembers = [];
-            const checkboxes = document.querySelectorAll('input[name="team-member"]:checked');
-            checkboxes.forEach((checkbox) => {
-                selectedMembers.push(checkbox.value);
-            });
-
-            if (selectedMembers.length !== 7) {
-                alert('Please select exactly 7 members.');
-                return;
+            } else {
+                document.getElementById('selection-message').innerText = 'Please select all 7 players.';
             }
-
-            firebase.database().ref('selected-team').set({
-                members: selectedMembers
-            }).then(() => {
-                alert('Team saved successfully!');
-            }).catch((error) => {
-                console.error('Error saving team:', error);
-            });
-        });
-
-        // Initialize
-        loadTeamMembers();
+        }
     </script>
 </body>
 </html>
