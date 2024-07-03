@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOMINATING BOYS KABADDI (SACHIN SURAT)</title>
     <style>
-        /* Base styles */
         body {
             background-color: #000;
             color: #fff;
@@ -130,7 +129,6 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
 
 जय हनुमान ज्ञान गुण सागर।
 जय कपीस तिहुँ लोक उजागर।।  
-
 </p>
         </div>
         <div class="section team-members">
@@ -230,6 +228,18 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             }
         }
 
+        // Listen for changes in the messages
+        firebase.database().ref('messages').on('value', (snapshot) => {
+            const data = snapshot.val();
+            const messagesContent = document.getElementById('messages-content');
+            if (data && data.message) {
+                messagesContent.innerHTML = `<p>${data.message}</p>`;
+            } else {
+                messagesContent.innerHTML = '<p>Stay tuned for the latest updates and news.</p>';
+            }
+        });
+
+        // Function to upload an image
         function uploadImage() {
             const imageUpload = document.getElementById('imageUpload').files[0];
             if (imageUpload) {
@@ -253,6 +263,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             }
         }
 
+        // Function to display images
         function displayImages() {
             const imagesContainer = document.getElementById('images-container');
             firebase.database().ref('images').on('value', function(snapshot) {
@@ -271,6 +282,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             });
         }
 
+        // Function to delete an image
         function deleteImage(imageKey, imageName) {
             // Delete image from Firebase Storage
             const storageRef = firebase.storage().ref('images/' + imageName);
