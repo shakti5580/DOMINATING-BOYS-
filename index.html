@@ -6,112 +6,99 @@
     <title>DOMINATING BOYS KABADDI (SACHIN SURAT)</title>
     <meta name="google-site-verification" content="M4dOYgy6_dDMQ2u9TOsZWrYN5Gs6B_Mm2jHfZ8VDUmY" />
     <style>
-        /* Your CSS styles */
-         body {
-            background-color: #1a1a1a; /* Matte black */
-            color: #ffffff; /* White text */
+        /* Base styles */
+        body {
+            background-color: #000;
+            color: #fff;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
-
         .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
         }
-
         header {
             text-align: center;
-            margin-bottom: 20px;
+            padding: 20px 0;
         }
         header img {
             max-width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
         }
-
-        header h1 {
-            font-size: 2.5em;
-            margin: 10px 0;
+        h1, h2 {
+            margin: 0;
         }
-
-        header p {
-            font-size: 1.2em;
-        }
-
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
-  .section h2 {
-            font-size: 2em;
-            border-bottom: 2px solid #ffffff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
         }
-
-        .section p, .section ul {
-            font-size: 1.2em;
+        .images img {
+            max-width: 100%;
+            height: auto;
+            flex: 1 1 calc(50% - 10px); /* Two images per row with gap */
         }
-
-        .section ul {
+        .google-form, .messages, .login-form {
+            text-align: center;
+        }
+        .google-form a, .team-members a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .team-members ul {
             list-style: none;
             padding: 0;
         }
-         .section ul li {
+        .team-members li {
             margin-bottom: 10px;
         }
-
-        .section ul li a {
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-        .section ul li a:hover {
-            text-decoration: underline;
-        }
-        
- .section images img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .section google-form a {
-            color: #ff9800; /* Accent color */
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .section google-form a:hover {
-            text-decoration: underline;
-        }
-        .login-form input {
-            margin-bottom: 10px;
-            padding: 10px;
-            width: 100%;
-            max-width: 300px;
-            border: 1px solid #ffffff;
-            background-color: #333333;
-            color: #ffffff;
-            border-radius: 5px;
-        }
-
-        .login-form button {
-            padding: 10px 20px;
-            background-color: #ff9800; /* Accent color */
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-          .login-form button:hover {
-            background-color: #e68900;
-        }
-
         footer {
             text-align: center;
-            margin-top: 20px;
-            padding: 10px 0;
-            border-top: 1px solid #ffffff;
+            padding: 20px 0;
         }
-        
+        .messages, .login-form {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .messages h2, .login-form h2 {
+            margin-top: 0;
+        }
+        .login-form input {
+            margin: 5px 0;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+        }
+        .login-form button {
+            padding: 10px 20px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .login-form button:hover {
+            background-color: #777;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .images img {
+                flex: 1 1 calc(100% - 10px); /* One image per row */
+            }
+            .login-form input {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -142,7 +129,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             <h2>Team Members</h2>
             <ul>
                 <li>SHAKTI - <a href="https://instagram.com/shaktisingh_5580" target="_blank">@shakti</a></li>
-                 <li>RAVI PANDEY - <a href="https://instagram.com/pandey_ravi13" target="_blank">@ravipandey</a></li>
+                <li>RAVI PANDEY - <a href="https://instagram.com/pandey_ravi13" target="_blank">@ravipandey</a></li>
                 <li>PIYUSH SINGH - <a href="https://instagram.com/mr_sankii_23" target="_blank">@piyush</a></li>
                 <li>VIVEK YADAV - <a href="https://instagram.com/mr___vivek_33" target="_blank">@vivek</a></li>
                 <li>RAJ - <a href="https://instagram.com/mr_raj_0.0.8" target="_blank">@raj</a></li>
@@ -156,7 +143,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
           
                 <!-- Add other team members -->
             </ul>
-        </div>.
+        </div>
         <div class="section images">
             <h2>Images</h2>
             <img src="photo_2024-06-30_15-30-25.jpg" alt="Image 1">
@@ -197,7 +184,6 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-        // Listen for form submit
         function login() {
             const userid = document.getElementById('userid').value;
             const password = document.getElementById('password').value;
@@ -205,7 +191,6 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
 
             firebase.auth().signInWithEmailAndPassword(userid, password)
                 .then((userCredential) => {
-                    // Signed in
                     loginMessage.innerHTML = '<p style="color: green;">Login successful! You can now update the messages.</p>';
                     enableMessageUpdate();
                 })
@@ -224,11 +209,13 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
 
         function updateMessage() {
             const newMessage = document.getElementById('new-message').value;
-            const messagesContent = document.getElementById('messages-content');
-
             if (newMessage.trim()) {
                 firebase.database().ref('messages').set({
                     message: newMessage
+                }).then(() => {
+                    document.getElementById('messages-content').innerHTML = `<p>${newMessage}</p>`;
+                }).catch((error) => {
+                    console.error("Error updating message: ", error);
                 });
             }
         }
