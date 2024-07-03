@@ -184,17 +184,6 @@
                     selectElement.appendChild(option);
                 });
             });
-
-            // Check if user is already signed in
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                    // User is signed in, hide the login form
-                    document.getElementById('login-form').style.display = 'none';
-                } else {
-                    // No user is signed in, show the login form
-                    document.getElementById('login-form').style.display = 'block';
-                }
-            });
         });
 
         // Function to sign in
@@ -208,6 +197,9 @@
                     const user = userCredential.user;
                     document.getElementById('login-message').innerText = 'Signed in successfully!';
                     document.getElementById('login-form').style.display = 'none'; // Hide login form after successful sign-in
+
+                    // After signing in, attempt to save playing 7 team
+                    savePlaying7();
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
@@ -217,40 +209,31 @@
 
         // Function to save playing 7 team
         function savePlaying7() {
-            // Check if user is logged in
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                    // User is signed in, proceed to save playing 7
-                    const player1 = document.getElementById('player1').value;
-                    const player2 = document.getElementById('player2').value;
-                    const player3 = document.getElementById('player3').value;
-                    const player4 = document.getElementById('player4').value;
-                    const player5 = document.getElementById('player5').value;
-                    const player6 = document.getElementById('player6').value;
-                    const player7 = document.getElementById('player7').value;
+            const player1 = document.getElementById('player1').value;
+            const player2 = document.getElementById('player2').value;
+            const player3 = document.getElementById('player3').value;
+            const player4 = document.getElementById('player4').value;
+            const player5 = document.getElementById('player5').value;
+            const player6 = document.getElementById('player6').value;
+            const player7 = document.getElementById('player7').value;
 
-                    if (player1 && player2 && player3 && player4 && player5 && player6 && player7) {
-                        firebase.database().ref('playing7').set({
-                            player1,
-                            player2,
-                            player3,
-                            player4,
-                            player5,
-                            player6,
-                            player7
-                        }).then(() => {
-                            document.getElementById('selection-message').innerText = 'Playing 7 saved successfully!';
-                        }).catch((error) => {
-                            document.getElementById('selection-message').innerText = 'Error saving Playing 7: ' + error.message;
-                        });
-                    } else {
-                        document.getElementById('selection-message').innerText = 'Please select all 7 players.';
-                    }
-                } else {
-                    // User is not signed in, prompt user to sign in
-                    document.getElementById('selection-message').innerText = 'Please sign in to save your team.';
-                }
-            });
+            if (player1 && player2 && player3 && player4 && player5 && player6 && player7) {
+                firebase.database().ref('playing7').set({
+                    player1,
+                    player2,
+                    player3,
+                    player4,
+                    player5,
+                    player6,
+                    player7
+                }).then(() => {
+                    document.getElementById('selection-message').innerText = 'Playing 7 saved successfully!';
+                }).catch((error) => {
+                    document.getElementById('selection-message').innerText = 'Error saving Playing 7: ' + error.message;
+                });
+            } else {
+                document.getElementById('selection-message').innerText = 'Please select all 7 players.';
+            }
         }
     </script>
 </body>
