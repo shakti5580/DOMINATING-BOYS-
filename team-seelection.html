@@ -56,25 +56,6 @@
         .team-selection select, .team-selection button {
             margin: 10px;
         }
-        .login-form {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .login-form input {
-            margin: 5px 0;
-            padding: 10px;
-            width: 80%;
-        }
-        .login-form button {
-            padding: 10px 20px;
-            background-color: #555;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .login-form button:hover {
-            background-color: #777;
-        }
     </style>
 </head>
 <body>
@@ -91,51 +72,29 @@
             <h1>Select Playing 7</h1>
         </header>
         
-        <!-- Login Form -->
-        <div class="login-form">
-            <input type="text" id="userid" placeholder="User ID"><br>
-            <input type="password" id="password" placeholder="Password"><br>
-            <button onclick="login()">Login</button>
-            <div id="login-message"></div>
-        </div>
-        
-        <!-- Team Selection Section -->
-        <div class="section team-selection" id="team-selection" style="display: none;">
-    <h2>Select the Players for the Next Match</h2>
-    <form id="team-form">
-        <label for="player1">Player 1:</label>
-        <select id="player1" name="player1">
-            <option value="">Select Player 1</option>
-        </select><br>
-
-        <label for="player2">Player 2:</label>
-        <select id="player2" name="player2">
-            <option value="">Select Player 2</option>
-        </select><br>
-<label for="player3">Player 3:</label>
-        <select id="player3" name="player3">
-            <option value="">Select Player 3</option>
-        </select><br>
-
-        <label for="player4">Player 4:</label>
-        <select id="player4" name="player4">
-            <option value="">Select Player 4</option>
-        </select><br>
-
-        <label for="player5">Player 5:</label>
-        <select id="player5" name="player5">
-            <option value="">Select Player 5</option>
-        </select><br>
-
-        <label for="player6">Player 6:</label>
-        <select id="player6" name="player6">
-            <option value="">Select Player 6</option>
-             <label for="player7">Player 7:</label>
-        <select id="player7" name="player7">
-            <option value="">Select Player 7</option>
-       
-        </select><br>
-            <!-- Add other player select dropdowns -->
+        <div class="section team-selection">
+            <h2>Select the Players for the Next Match</h2>
+            <select id="player1">
+                <option value="">Select Player 1</option>
+            </select>
+            <select id="player2">
+                <option value="">Select Player 2</option>
+            </select>
+            <select id="player3">
+                <option value="">Select Player 3</option>
+            </select>
+            <select id="player4">
+                <option value="">Select Player 4</option>
+            </select>
+            <select id="player5">
+                <option value="">Select Player 5</option>
+            </select>
+            <select id="player6">
+                <option value="">Select Player 6</option>
+            </select>
+            <select id="player7">
+                <option value="">Select Player 7</option>
+            </select>
             <button onclick="savePlaying7()">Save Team</button>
             <div id="selection-message"></div>
         </div>
@@ -164,62 +123,89 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-        // Listen for changes in authentication state
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                // User is signed in
-                document.getElementById('team-selection').style.display = 'block';
-            } else {
-                // User is signed out
-                document.getElementById('team-selection').style.display = 'none';
-            }
+        const players = [
+            "SHAKTI",
+            "Player 2",
+            "Player 3",
+            "Player 4",
+            "Player 5",
+            "Player 6",
+            "Player 7",
+            "Player 8",
+            "Player 9",
+            "Player 10",
+            "Player 11",
+            "Player 12"
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const playerSelectElements = document.querySelectorAll('select');
+
+            playerSelectElements.forEach(selectElement => {
+                players.forEach(player => {
+                    const option = document.createElement('option');
+                    option.value = player;
+                    option.textContent = player;
+                    selectElement.appendChild(option);
+                });
+            });
         });
-
-        function login() {
-            const userid = document.getElementById('userid').value;
+         // Function to sign in
+        function signIn() {
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const loginMessage = document.getElementById('login-message');
 
-            firebase.auth().signInWithEmailAndPassword(userid, password)
+            firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     // Signed in
-                    loginMessage.innerHTML = '<p style="color: green;">Login successful!</p>';
+                    const user = userCredential.user;
+                    document.getElementById('login-message').innerText = 'Signed in successfully!';
+                    document.getElementById('login-form').style.display = 'none'; // Hide login form after successful sign-in
                 })
                 .catch((error) => {
-                    loginMessage.innerHTML = '<p style="color: red;">Invalid user ID or password.</p>';
+                    const errorMessage = error.message;
+                    document.getElementById('login-message').innerText = errorMessage;
                 });
         }
-
+  // Function to save playing 7 team
         function savePlaying7() {
-            const player1 = document.getElementById('player1').value;
-             const player2 = document.getElementById('player2').value;
-            const player3 = document.getElementById('player3').value;
-             const player4 = document.getElementById('player4').value;
-             const player5 = document.getElementById('player5').value;
-             const player6 = document.getElementById('player6').value;
-             const player7 = document.getElementById('player7').value;
-            // Add other player selections
+            // Check if user is logged in
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    // User is signed in, proceed to save playing 7
+                    const player1 = document.getElementById('player1').value;
+                    const player2 = document.getElementById('player2').value;
+                    const player3 = document.getElementById('player3').value;
+                    const player4 = document.getElementById('player4').value;
+                    const player5 = document.getElementById('player5').value;
+                    const player6 = document.getElementById('player6').value;
+                    const player7 = document.getElementById('player7').value;
 
-            // Example validation
-            if (player1 && player2 /* && other players */) {
-                firebase.database().ref('playing7').set({
-                    player1,
-                    player2,
-                    player3,
-                    player4,
-                    player5,
-                    player6,
-                    player7,
-                    // Add other players
-                }).then(() => {
-                    document.getElementById('selection-message').innerText = 'Playing 7 saved successfully!';
-                }).catch((error) => {
-                    document.getElementById('selection-message').innerText = 'Error saving Playing 7: ' + error.message;
-                });
-            } else {
-                document.getElementById('selection-message').innerText = 'Please select all 7 players.';
-            }
+                    if (player1 && player2 && player3 && player4 && player5 && player6 && player7) {
+                        firebase.database().ref('playing7').set({
+                            player1,
+                            player2,
+                            player3,
+                            player4,
+                            player5,
+                            player6,
+                            player7
+                        }).then(() => {
+                            document.getElementById('selection-message').innerText = 'Playing 7 saved successfully!';
+                        }).catch((error) => {
+                            document.getElementById('selection-message').innerText = 'Error saving Playing 7: ' + error.message;
+                        });
+                    } else {
+                        document.getElementById('selection-message').innerText = 'Please select all 7 players.';
+                    }
+                } else {
+                    // User is not signed in, prompt user to sign in
+                    document.getElementById('selection-message').innerText = 'Please sign in to save your team.';
+                }
+            });
         }
     </script>
 </body>
 </html>
+
+      
