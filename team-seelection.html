@@ -52,6 +52,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            display: none; /* Initially hide the team selection section */
         }
         .team-selection select, .team-selection button {
             margin: 10px;
@@ -62,7 +63,7 @@
             padding: 20px;
             background-color: #333;
             border-radius: 8px;
-            display: none; /* Initially hide the login form */
+            display: block; /* Initially show the login form */
         }
         .login-form label, .login-form input {
             display: block;
@@ -96,7 +97,17 @@
             <h1>Select Playing 7</h1>
         </header>
         
-        <div class="section team-selection">
+        <div class="section login-form" id="login-form">
+            <h2>Login</h2>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button onclick="signIn()">Sign In</button>
+            <div id="login-message"></div>
+        </div>
+        
+        <div class="section team-selection" id="team-selection">
             <h2>Select the Players for the Next Match</h2>
             <select id="player1">
                 <option value="">Select Player 1</option>
@@ -121,16 +132,6 @@
             </select>
             <button onclick="savePlaying7()">Save Team</button>
             <div id="selection-message"></div>
-        </div>
-        
-        <div class="login-form" id="login-form">
-            <h2>Login</h2>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button onclick="signIn()">Sign In</button>
-            <div id="login-message"></div>
         </div>
         
         <footer>
@@ -160,8 +161,8 @@
 
         const players = [
             "SHAKTI",
-            "Player 2",
-            "Player 3",
+            "vivek ",
+            "ANMOL",
             "Player 4",
             "Player 5",
             "Player 6",
@@ -197,9 +198,7 @@
                     const user = userCredential.user;
                     document.getElementById('login-message').innerText = 'Signed in successfully!';
                     document.getElementById('login-form').style.display = 'none'; // Hide login form after successful sign-in
-
-                    // After signing in, attempt to save playing 7 team
-                    savePlaying7();
+                    document.getElementById('team-selection').style.display = 'flex'; // Show team selection section
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
