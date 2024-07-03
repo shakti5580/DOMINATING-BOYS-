@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Playing 7</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        header img {
+            max-width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+        h1, h2 {
+            margin: 0;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .team-selection {
+            text-align: center;
+        }
+        .team-selection ul {
+            list-style: none;
+            padding: 0;
+        }
+        .team-selection li {
+            margin-bottom: 10px;
+        }
+        .team-selection input {
+            margin-right: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="photo_2024-06-30_15-30-21 (1).png" alt="DOMINATING BOYS Logo">
+            <h1>DOMINATING BOYS</h1>
+            <p>Select Playing 7 for Next Match</p>
+        </header>
+        <div class="section team-selection">
+            <h2>Choose Your Team</h2>
+            <form id="team-selection-form">
+                <ul id="team-members-list">
+                    <!-- Team members will be loaded here -->
+                </ul>
+                <button type="submit">Save Team</button>
+            </form>
+        </div>
+        <footer>
+            <p>© 2024 DOMINATING BOYS. All rights reserved.</p>
+        </footer>
+    </div>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC-F8SsB8xRjQC0DzSyMoBwP0e6mEO5pp8",
+            authDomain: "dominating-boys.firebaseapp.com",
+            databaseURL: "https://dominating-boys-default-rtdb.firebaseio.com",
+            projectId: "dominating-boys",
+            storageBucket: "dominating-boys.appspot.com",
+            messagingSenderId: "479810830315",
+            appId: "1:479810830315:web:4e792cffe5beeacc0c63ae",
+            measurementId: "G-DPWJ36X01F"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Load team members
+        function loadTeamMembers() {
+            const teamMembersList = document.getElementById('team-members-list');
+            firebase.database().ref('team-members').on('value', (snapshot) => {
+                teamMembersList.innerHTML = '';
+                snapshot.forEach((childSnapshot) => {
+                    const member = childSnapshot.val();
+                    teamMembersList.innerHTML += `
+                        <li>
+                            <input type="checkbox" name="team-member" value="${childSnapshot.key}">
+                            ${member.name}
+                        </li>
+                    `;
+                });
+            });
+        }
+
+        // Save selected team
+        document.getElementById('team-selection-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const selectedMembers = [];
+            const checkboxes = document.querySelectorAll('input[name="team-member"]:checked');
+            checkboxes.forEach((checkbox) => {
+                selectedMembers.push(checkbox.value);
+            });
+
+            if (selectedMembers.length !== 7) {
+                alert('Please select exactly 7 members.');
+                return;
+            }
+
+            firebase.database().ref('selected-team').set({
+                members: selectedMembers
+            }).then(() => {
+                alert('Team saved successfully!');
+            }).catch((error) => {
+                console.error('Error saving team:', error);
+            });
+        });
+
+        // Initialize
+        loadTeamMembers();
+    </script>
+</body>
+</html>
