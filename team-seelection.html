@@ -64,22 +64,41 @@
             background-color: #333;
             border-radius: 8px;
             display: block; /* Initially show the login form */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-        .login-form label, .login-form input {
+        .login-form label {
             display: block;
             width: 100%;
             margin-bottom: 10px;
             color: #fff;
+        }
+        .login-form input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #fff;
+        }
+        .login-form input::placeholder {
+            color: #999;
         }
         .login-form button {
             padding: 10px;
             background-color: #4CAF50;
             color: #fff;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
         }
         .login-form button:hover {
             background-color: #45a049;
+        }
+        #login-message {
+            color: #ff0000;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -100,9 +119,9 @@
         <div class="section login-form" id="login-form">
             <h2>Login</h2>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
             <button onclick="signIn()">Sign In</button>
             <div id="login-message"></div>
         </div>
@@ -161,16 +180,16 @@
 
         const players = [
             "SHAKTI",
-            "vivek ",
+            "VIVEK",
             "ANMOL",
-            "Player 4",
-            "Player 5",
-            "Player 6",
-            "Player 7",
-            "Player 8",
-            "Player 9",
-            "Player 10",
-            "Player 11",
+            "NIKHIL",
+            "SAHIL",
+            "AMAN",
+            "RAJDEEP",
+            "JANNU",
+            "RAVI",
+            "PIYUSH",
+            "CHANDU",
             "Player 12"
         ];
 
@@ -197,12 +216,14 @@
                     // Signed in
                     const user = userCredential.user;
                     document.getElementById('login-message').innerText = 'Signed in successfully!';
+                    document.getElementById('login-message').style.color = '#4CAF50';
                     document.getElementById('login-form').style.display = 'none'; // Hide login form after successful sign-in
                     document.getElementById('team-selection').style.display = 'flex'; // Show team selection section
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
                     document.getElementById('login-message').innerText = errorMessage;
+                    document.getElementById('login-message').style.color = '#ff0000';
                 });
         }
 
@@ -227,11 +248,14 @@
                     player7
                 }).then(() => {
                     document.getElementById('selection-message').innerText = 'Playing 7 saved successfully!';
+                    document.getElementById('selection-message').style.color = '#4CAF50';
                 }).catch((error) => {
                     document.getElementById('selection-message').innerText = 'Error saving Playing 7: ' + error.message;
+                    document.getElementById('selection-message').style.color = '#ff0000';
                 });
             } else {
                 document.getElementById('selection-message').innerText = 'Please select all 7 players.';
+                document.getElementById('selection-message').style.color = '#ff0000';
             }
         }
     </script>
