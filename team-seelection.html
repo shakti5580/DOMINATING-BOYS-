@@ -56,6 +56,29 @@
         .team-selection select, .team-selection button {
             margin: 10px;
         }
+        .login-form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 8px;
+        }
+        .login-form label, .login-form input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .login-form button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .login-form button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -99,14 +122,25 @@
             <div id="selection-message"></div>
         </div>
         
+        <div class="login-form" id="login-form">
+            <h2>Login</h2>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button onclick="signIn()">Sign In</button>
+            <div id="login-message"></div>
+        </div>
+        
         <footer>
             <p>© 2024 DOMINATING BOYS. All rights reserved.</p>
         </footer>
     </div>
     <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <!-- Add Firebase products that you want to use -->
+    <!-- Firebase Authentication -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <!-- Firebase Database -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <script>
         // Your web app's Firebase configuration
@@ -150,7 +184,8 @@
                 });
             });
         });
-         // Function to sign in
+
+        // Function to sign in
         function signIn() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -167,7 +202,8 @@
                     document.getElementById('login-message').innerText = errorMessage;
                 });
         }
-  // Function to save playing 7 team
+
+        // Function to save playing 7 team
         function savePlaying7() {
             // Check if user is logged in
             firebase.auth().onAuthStateChanged(function(user) {
@@ -207,5 +243,3 @@
     </script>
 </body>
 </html>
-
-      
