@@ -4,107 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOMINATING BOYS KABADDI (SACHIN SURAT)</title>
+    <meta name="google-site-verification" content="M4dOYgy6_dDMQ2u9TOsZWrYN5Gs6B_Mm2jHfZ8VDUmY" />
     <style>
-        body {
-            background-color: #000;
-            color: #fff;
+        /* Your CSS styles */
+         body {
+            background-color: #1a1a1a; /* Matte black */
+            color: #ffffff; /* White text */
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
+
         .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
             padding: 20px;
         }
+
         header {
             text-align: center;
-            padding: 20px 0;
+            margin-bottom: 20px;
         }
         header img {
             max-width: 100px;
-            height: auto;
-            display: block;
-            margin: 0 auto 10px;
         }
-        h1, h2 {
-            margin: 0;
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 10px 0;
         }
+
+        header p {
+            font-size: 1.2em;
+        }
+
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
-        .images {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+  .section h2 {
+            font-size: 2em;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
-        .images img {
-            max-width: 100%;
-            height: auto;
+
+        .section p, .section ul {
+            font-size: 1.2em;
         }
-        .google-form {
-            text-align: center;
-        }
-        .google-form a {
-            color: #fff;
-            text-decoration: underline;
-        }
-        .team-members ul {
+
+        .section ul {
             list-style: none;
             padding: 0;
         }
-        .team-members li {
+         .section ul li {
             margin-bottom: 10px;
         }
-        .team-members a {
-            color: #fff;
+
+        .section ul li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .section ul li a:hover {
             text-decoration: underline;
         }
-        footer {
-            text-align: center;
-            padding: 20px 0;
+        
+ .section images img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
         }
-        .messages {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 5px;
+
+        .section google-form a {
+            color: #ff9800; /* Accent color */
+            text-decoration: none;
+            font-weight: bold;
         }
-        .messages h2 {
-            margin-top: 0;
-        }
-        .login-form {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
+
+        .section google-form a:hover {
+            text-decoration: underline;
         }
         .login-form input {
-            margin: 5px 0;
+            margin-bottom: 10px;
             padding: 10px;
-            width: 80%;
+            width: 100%;
+            max-width: 300px;
+            border: 1px solid #ffffff;
+            background-color: #333333;
+            color: #ffffff;
+            border-radius: 5px;
         }
+
         .login-form button {
             padding: 10px 20px;
-            background-color: #555;
-            color: #fff;
+            background-color: #ff9800; /* Accent color */
+            color: #ffffff;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
-        .login-form button:hover {
-            background-color: #777;
+          .login-form button:hover {
+            background-color: #e68900;
         }
-        .images button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            background-color: #555;
-            color: #fff;
-            border: none;
-            cursor: pointer;
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 0;
+            border-top: 1px solid #ffffff;
         }
-        .images button:hover {
-            background-color: #777;
-        }
+        
     </style>
 </head>
 <body>
@@ -135,7 +142,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             <h2>Team Members</h2>
             <ul>
                 <li>SHAKTI - <a href="https://instagram.com/shaktisingh_5580" target="_blank">@shakti</a></li>
-                <li>RAVI PANDEY - <a href="https://instagram.com/pandey_ravi13" target="_blank">@ravipandey</a></li>
+                 <li>RAVI PANDEY - <a href="https://instagram.com/pandey_ravi13" target="_blank">@ravipandey</a></li>
                 <li>PIYUSH SINGH - <a href="https://instagram.com/mr_sankii_23" target="_blank">@piyush</a></li>
                 <li>VIVEK YADAV - <a href="https://instagram.com/mr___vivek_33" target="_blank">@vivek</a></li>
                 <li>RAJ - <a href="https://instagram.com/mr_raj_0.0.8" target="_blank">@raj</a></li>
@@ -149,12 +156,11 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
           
                 <!-- Add other team members -->
             </ul>
-        </div>
+        </div>.
         <div class="section images">
             <h2>Images</h2>
-            <div id="images-container"></div>
-            <input type="file" id="imageUpload" accept="image/*">
-            <button onclick="uploadImage()">Upload Image</button>
+            <img src="photo_2024-06-30_15-30-25.jpg" alt="Image 1">
+            <img src="photo_2024-06-30_15-30-21.jpg" alt="Team Image 2">
         </div>
         <div class="section google-form">
             <h2>Fill this form to participate</h2>
@@ -176,7 +182,6 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -238,64 +243,6 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
                 messagesContent.innerHTML = '<p>Stay tuned for the latest updates and news.</p>';
             }
         });
-
-        // Function to upload an image
-        function uploadImage() {
-            const imageUpload = document.getElementById('imageUpload').files[0];
-            if (imageUpload) {
-                const storageRef = firebase.storage().ref('images/' + imageUpload.name);
-                const uploadTask = storageRef.put(imageUpload);
-
-                uploadTask.on('state_changed', function(snapshot) {
-                    // Progress monitoring can be added here
-                }, function(error) {
-                    console.error('Error uploading image:', error);
-                }, function() {
-                    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                        // Save the image URL to the database
-                        const imagesRef = firebase.database().ref('images').push();
-                        imagesRef.set({
-                            url: downloadURL,
-                            name: imageUpload.name
-                        });
-                    });
-                });
-            }
-        }
-
-        // Function to display images
-        function displayImages() {
-            const imagesContainer = document.getElementById('images-container');
-            firebase.database().ref('images').on('value', function(snapshot) {
-                imagesContainer.innerHTML = '';
-                snapshot.forEach(function(childSnapshot) {
-                    const imageUrl = childSnapshot.val().url;
-                    const imageName = childSnapshot.val().name;
-                    const imageKey = childSnapshot.key;
-                    imagesContainer.innerHTML += `
-                        <div>
-                            <img src="${imageUrl}" alt="${imageName}">
-                            <button onclick="deleteImage('${imageKey}', '${imageName}')">Delete</button>
-                        </div>
-                    `;
-                });
-            });
-        }
-
-        // Function to delete an image
-        function deleteImage(imageKey, imageName) {
-            // Delete image from Firebase Storage
-            const storageRef = firebase.storage().ref('images/' + imageName);
-            storageRef.delete().then(() => {
-                // Remove the image reference from the database
-                firebase.database().ref('images/' + imageKey).remove();
-            }).catch((error) => {
-                console.error('Error deleting image:', error);
-            });
-        }
-
-        // Initialize display
-        displayImages();
     </script>
 </body>
 </html>
