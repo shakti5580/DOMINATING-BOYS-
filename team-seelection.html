@@ -101,29 +101,6 @@
             margin-top: 10px;
             
         }
-.message-section {
-    margin: 40px 0;
-    text-align: center;
-}
-
-.message-section button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.message-section button:hover {
-    background-color: #45a049;
-}
-
-#message-status {
-    color: #ff0000;
-    margin-top: 10px;
-}
-
         
     </style>
 </head>
@@ -291,38 +268,6 @@
             }
         }
 
-    // Function to send direct messages to players
-    function sendDirectMessage() {
-        const players = [
-            "shakti_instagram_id",
-            "vivek_instagram_id",
-            // Add other player Instagram IDs here
-        ];
-
-        const message = "You have been selected for the next match!";
-
-        // Replace this URL with your actual bot server endpoint
-        const botEndpoint = "https://your-bot-server.com/sendMessage";
-
-        players.forEach(player => {
-            fetch(botEndpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username: player, message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('message-status').innerText = 'Messages sent successfully!';
-                document.getElementById('message-status').style.color = '#4CAF50';
-            })
-            .catch(error => {
-                document.getElementById('message-status').innerText = 'Error sending messages: ' + error.message;
-                document.getElementById('message-status').style.color = '#ff0000';
-            });
-        });
-    }
 
     </script>
 </body>
