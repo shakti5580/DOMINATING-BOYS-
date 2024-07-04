@@ -1,0 +1,32 @@
+name: Send Instagram DMs
+
+on:
+  workflow_dispatch:
+    inputs:
+      usernames:
+        description: 'Instagram usernames'
+        required: true
+      message:
+        description: 'Message to send'
+        required: true
+
+jobs:
+  send_dm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install instabot
+
+      - name: Run Instabot script
+        run: python send_dm.py '${{ toJson(github.event.inputs) }}'
