@@ -36,10 +36,9 @@
             text-decoration: none;
             padding: 14px 20px;
             display: block;
-            
-             nav ul li a:hover {
-            background-color: #575757;
         }
+        nav ul li a:hover {
+            background-color: #575757;
         }
         header {
             text-align: center;
@@ -119,26 +118,24 @@
             .login-form input {
                 width: 100%;
             }
-            .latest-instagram {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.latest-instagram img {
-    border-radius: 5px;
-}
-
+        }
+        .latest-instagram {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .latest-instagram img {
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-            <!-- Navigation bar -->
+        <!-- Navigation bar -->
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="team-seelection.html">Select Playing 7</a></li>
-    <li><a href="scoring.html">Scorer</a></li>
+                <li><a href="scoring.html">Scorer</a></li>
             </ul>
         </nav>
    
@@ -179,11 +176,8 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
                 <li>RAJDEEP(MICHEL) 10 - <a href="https://instagram.com/mr_rajdeep___18" target="_blank">@rajdeep</a></li>
                 <li>AMAN- <a href="https://instagram.com/it_aman_39" target="_blank">@aman</a></li>
                 <li>CHANDRESH - <a href="https://instagram.com/chandresh._18" target="_blank">@CHANDU</a></li>
-                 <li>ADITYA - <a href="https://instagram.com/adiii_4180" target="_blank">@aditya</a></li>
+                <li>ADITYA - <a href="https://instagram.com/adiii_4180" target="_blank">@aditya</a></li>
                 <li>ASHISH - <a href="https://instagram.com/ashish_madesia" target="_blank">@ashish</a></li>
-          
-          
-                <!-- Add other team members -->
             </ul>
         </div>
         <div class="section images">
@@ -202,25 +196,12 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
             <button onclick="login()">Login</button>
             <div id="login-message"></div>
         </div>
-       <div class="container">
-        <header>
-            <h1>Welcome to DOMINATING BOYS</h1>
-        </header>
-        <body>
-
-        <!-- Add the new section for displaying selected players -->
         <div class="section selected-players">
             <h2>Selected Players for the Next Match</h2>
             <div id="selected-players-list">
                 <p>Loading selected players...</p>
             </div>
         </div>
-         
-
-
-
-       
-
         <footer>
             <p>© 2024 DOMINATING BOYS. All rights reserved.</p>
         </footer>
@@ -230,6 +211,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -245,8 +227,57 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
         
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-     
-                 
+
+        // Initialize Firebase Messaging
+        const messaging = firebase.messaging();
+
+        function requestNotificationPermission() {
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    console.log('Notification permission granted.');
+                    getMessagingToken();
+                } else {
+                    console.log('Unable to get permission to notify.');
+                }
+            });
+        }
+
+        function getMessagingToken() {
+            messaging.getToken({ vapidKey: 'YOUR_VAPID_KEY_HERE' }).then((currentToken) => {
+                if (currentToken) {
+                    console.log('Got FCM device token:', currentToken);
+                    // Save the token to the database
+                    saveTokenToDatabase(currentToken);
+                } else {
+                    console.log('No registration token available. Request permission to generate one.');
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+            });
+        }
+
+        function saveTokenToDatabase(token) {
+            if (firebase.auth().currentUser) {
+                const userId = firebase.auth().currentUser.uid;
+                firebase.database().ref('fcmTokens').child(userId).set(token);
+            } else {
+                console.log('User not logged in, token not saved');
+            }
+        }
+
+        // Handle incoming messages
+        messaging.onMessage((payload) => {
+            console.log('Message received. ', payload);
+            // You can customize how to display the notification here
+            const notificationTitle = payload.notification.title;
+            const notificationOptions = {
+                body: payload.notification.body,
+                icon: '/photo_2024-06-30_15-30-21 (1).png'
+            };
+
+            new Notification(notificationTitle, notificationOptions);
+        });
+
         function login() {
             const userid = document.getElementById('userid').value;
             const password = document.getElementById('password').value;
@@ -256,6 +287,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
                 .then((userCredential) => {
                     loginMessage.innerHTML = '<p style="color: green;">Login successful! You can now update the messages.</p>';
                     enableMessageUpdate();
+                    requestNotificationPermission();
                 })
                 .catch((error) => {
                     loginMessage.innerHTML = '<p style="color: red;">Invalid user ID or password.</p>';
@@ -277,10 +309,18 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
                     message: newMessage
                 }).then(() => {
                     document.getElementById('messages-content').innerHTML = `<p>${newMessage}</p>`;
+                    sendNotificationToAll(newMessage);
                 }).catch((error) => {
                     console.error("Error updating message: ", error);
                 });
             }
+        }
+
+        function sendNotificationToAll(message) {
+            // This function should be implemented on your server
+            // Here's a placeholder for what it might look like
+            console.log('Sending notification to all users:', message);
+            // In a real implementation, you would make an API call to your server here
         }
 
         // Function to load selected players
@@ -311,6 +351,7 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
         document.addEventListener('DOMContentLoaded', function() {
             loadSelectedPlayers();
         });
+
         // Listen for changes in the messages
         firebase.database().ref('messages').on('value', (snapshot) => {
             const data = snapshot.val();
@@ -324,3 +365,4 @@ We aim to dominate the kabaddi field with our exceptional teamwork, strategic pr
     </script>
 </body>
 </html>
+
